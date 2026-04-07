@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TravelSphere — Beyond Borders</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700;9..144,800&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <style>
+    :root {
+      --navy: #0a1931;
+      --maroon: #800000;
+      --gold: #d4af37;
+      --light: #f5f5f5;
+      --white: #ffffff;
+      --text-blue: #000080;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Poppins', sans-serif; background: var(--light); color: #333; line-height: 1.6; overflow-x: hidden; }
+
+    .navbar {
+      position: sticky; top: 0; background: var(--navy);
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0 5%; min-height: 78px; z-index: 1000;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    }
+    .logo { font-family: 'Fraunces', serif; font-weight: 800; font-size: 1.7rem; letter-spacing: 1.5px; color: white; cursor: pointer; }
+    .logo span { color: var(--gold); }
+    .navbar ul { display: flex; list-style: none; gap: 20px; flex-wrap: wrap; justify-content: flex-end; }
+    .navbar a { color: white; text-decoration: none; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; font-weight: 700; }
+    .navbar a:hover { color: var(--gold); }
+    .signup-link {
+      background: var(--gold);
+      color: var(--navy) !important;
+      padding: 8px 14px;
+      border-radius: 999px;
+    }
+    .signup-link:hover {
+      background: #e8c65a;
+      color: var(--navy) !important;
+    }
+
+    .hero {
+      display: grid; grid-template-columns: 1.2fr 0.8fr;
+      padding: 100px 8%; align-items: center; gap: 60px;
+      background: white; min-height: 85vh;
+    }
+    .hero-left h1 { font-family: 'Fraunces', serif; font-size: 4rem; line-height: 1.1; color: var(--navy); }
+    .hero-left h1 i { font-weight: 700; color: var(--gold); }
+    .hero-left p { margin: 24px 0; font-size: 1.05rem; color: #666; max-width: 540px; }
+
+    .btn {
+      padding: 14px 32px; border: none; border-radius: 50px; cursor: pointer;
+      font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; transition: 0.3s;
+      font-family: 'Poppins', sans-serif;
+    }
+    .yellow { background: var(--gold); color: var(--navy); margin-right: 12px; }
+    .maroon { background: var(--maroon); color: white; }
+    .btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.12); }
+
+    .hero-right { position: relative; height: 400px; width: 300px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+    .card-stack { width: 240px; height: 320px; border-radius: 15px; position: absolute; background-size: cover; background-position: center; box-shadow: 0 10px 30px rgba(0,0,0,0.15); border: 5px solid white; transition: all 0.5s ease-in-out; }
+    .c1 { background-image: url('images/paris.jpg'); z-index: 3; transform: rotate(-6deg); }
+    .c2 { background-image: url('images/bali.jpg'); z-index: 2; transform: rotate(0deg); }
+    .c3 { background-image: url('images/mountains.jpg'); z-index: 1; transform: rotate(6deg); }
+    .hero-right:hover .card-stack { box-shadow: 0 25px 50px rgba(0,0,0,0.3); }
+    .hero-right:hover .c1 { transform: translate(-60px, -10px) rotate(-12deg) scale(1.05); }
+    .hero-right:hover .c2 { transform: translate(0, -20px) scale(1.1); z-index: 5; }
+    .hero-right:hover .c3 { transform: translate(60px, 10px) rotate(12deg) scale(1.05); }
+
+    .section-padding { padding: 82px 5%; }
+    .section-title {
+      text-align:center; font-size: 2.4rem; color: var(--text-blue); margin-bottom: 34px;
+      font-family: 'Fraunces', serif;
+    }
+
+    .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    .package-card {
+      background: white; border-radius: 20px; overflow: hidden;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.05); transition: 0.3s;
+      display: flex; flex-direction: column; position: relative;
+    }
+    .package-card:hover { transform: translateY(-5px); }
+    .img-container { height: 180px; margin: 12px; border-radius: 12px; background-size: cover; background-position: center; }
+    .content { padding: 0 15px 15px 15px; text-align: center; }
+    .content h3 { color: var(--text-blue); margin: 5px 0; font-size: 1.2rem; }
+    .duration { color: #666; font-size: 0.85rem; margin-bottom: 8px; }
+    .price { color: var(--text-blue); font-weight: 700; font-size: 1.1rem; display: block; margin-bottom: 15px; }
+    .pkg-btn-group { display: flex; gap: 8px; margin-bottom: 10px; justify-content: center; }
+    .btn-small { padding: 8px 12px; border-radius: 20px; font-size: 0.65rem; font-weight: 700; cursor: pointer; transition: 0.3s; }
+    .btn-outline { border: 1px solid #333; background: white; }
+    .btn-filled { border: none; background: var(--gold); color: black; }
+    .info-box {
+      background: #fffdf2; border-left: 4px solid var(--gold);
+      margin: 0 12px 12px 12px; padding: 10px; font-size: 0.8rem;
+      text-align: left; color: #444; border-radius: 0 8px 8px 0;
+      display: none; animation: fadeIn 0.4s ease;
+    }
+
+    .bookings-section { background: #eef4ff; }
+    .booking-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .booking-card {
+      background: linear-gradient(160deg, #0e2f66, #18489a);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 18px; padding: 24px;
+      box-shadow: 0 8px 18px rgba(10,25,49,0.22);
+    }
+    .booking-card h3 { color: #f8f2de; font-family: 'Fraunces', serif; margin-bottom: 8px; }
+    .booking-card p { color: #e6ecff; font-size: 0.92rem; }
+
+    .about-section { background: #f9f9f9; padding: 90px 8%; text-align: center; }
+    .about-section h2 { font-family: 'Fraunces', serif; font-size: 2.4rem; color: var(--navy); margin-bottom: 12px; }
+    .about-section .subtitle { max-width: 760px; margin: 0 auto 35px; color: #666; }
+    .about-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .about-card { background: #fff; border-radius: 18px; padding: 22px; box-shadow: 0 8px 18px rgba(0,0,0,0.06); transition: 0.3s; }
+    .about-card:hover { transform: translateY(-5px); box-shadow: 0 14px 26px rgba(0,0,0,0.1); }
+    .about-card h3 { color: var(--text-blue); font-size: 1.05rem; margin-bottom: 8px; }
+    .about-card p { font-size: 0.92rem; color: #555; }
+
+    .contact-section {
+      background: linear-gradient(180deg, #ffffff, #f6f8fc);
+      padding: 62px 8%;
+    }
+    .contact-wrap {
+      max-width: 700px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      align-items: stretch;
+    }
+    .contact-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+    }
+    .contact-card h3 {
+      font-family: 'Fraunces', serif;
+      color: var(--navy);
+      margin-bottom: 8px;
+      font-size: 1.35rem;
+    }
+    .contact-card p { color: #5d6470; margin-bottom: 8px; font-size: 0.9rem; }
+    .field {
+      width: 100%;
+      border: 1px solid #d6dce6;
+      border-radius: 12px;
+      padding: 11px 12px;
+      margin-bottom: 10px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.88rem;
+    }
+
+    .contact-rate {
+      max-width: 100%;
+      width: 100%;
+      margin: 4px auto 0;
+      background: var(--navy);
+      color: #fff;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.12);
+      padding: 18px;
+      text-align: center;
+      box-shadow: 0 12px 24px rgba(10,25,49,0.28);
+    }
+    .contact-rate h3 { font-family: 'Fraunces', serif; font-size: 1.35rem; margin-bottom: 4px; }
+    .contact-rate p { margin-bottom: 8px; font-size: 0.85rem; color: #dde4ff; }
+    .stars-large { font-size: 30px; color: rgba(255,255,255,0.28); cursor: pointer; margin: 8px 0; }
+    .stars-large span { transition: 0.3s; }
+    .stars-large span.active { color: var(--gold); text-shadow: 0 0 12px rgba(255,193,7,0.35); }
+    .feedback-area {
+      width: 100%; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 10px; padding: 10px; color: white; font-family: inherit;
+      margin-bottom: 10px; resize: none; outline: none; font-size: 0.84rem;
+    }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+    footer {
+      background: #070f22;
+      color: rgba(255,255,255,0.8);
+      text-align: center;
+      padding: 44px 22px 24px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .footer-nav {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+    .footer-nav span {
+      color: rgba(255,255,255,0.9);
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      font-weight: 600;
+    }
+    .footer-quote {
+      max-width: 700px;
+      margin: 0 auto 15px;
+      color: #d7dced;
+      font-style: italic;
+      font-size: 0.95rem;
+    }
+    .socials {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+    .socials span {
+      color: #fff;
+      font-size: 1.2rem;
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.1);
+    }
+
+    @media(max-width: 1100px) {
+      .grid { grid-template-columns: repeat(2, 1fr); }
+      .about-grid, .booking-grid { grid-template-columns: repeat(2, 1fr); }
+      .contact-wrap { grid-template-columns: 1fr; }
+    }
+
+    @media(max-width: 900px) {
+      .navbar { padding: 10px 4%; }
+      .logo { font-size: 1.35rem; }
+      .navbar ul { gap: 10px; }
+      .navbar a { font-size: 0.63rem; }
+    }
+
+    @media(max-width: 700px) {
+      .grid, .about-grid, .booking-grid { grid-template-columns: 1fr; }
+      .hero { grid-template-columns: 1fr; text-align: center; }
+      .hero-right { margin: 40px auto; }
+      .hero-left h1 { font-size: 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="logo" onclick="document.getElementById('home').scrollIntoView({behavior:'smooth'})">TRAVEL<span>SPHERE</span></div>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#destinations">Destinations</a></li>
+      <li><a href="booking.html">Booking</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="login.html">Login</a></li>
+      <li><a href="signup.html" class="signup-link">Signup</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero" id="home">
+    <div class="hero-left">
+      <h1>Beyond Borders,<br><i>Within Reach.</i></h1>
+      <p>Luxury travel experiences curated by experts. Discover our 12 premium global escapes.</p>
+      <div class="hero-actions">
+        <button class="btn yellow" onclick="document.getElementById('destinations').scrollIntoView({behavior:'smooth'})">Explore Trips</button>
+        <button class="btn maroon" onclick="window.location.href='booking.html'">Book Now</button>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="card-stack c1"></div>
+      <div class="card-stack c2"></div>
+      <div class="card-stack c3"></div>
+    </div>
+  </section>
+
+  <section class="section-padding" id="destinations">
+    <h2 class="section-title">Amazing Packages</h2>
+    <div class="grid" id="pkgContainer"></div>
+  </section>
+
+  <section class="about-section" id="about">
+    <h2>About Us</h2>
+    <p class="subtitle">TravelSphere creates premium travel experiences with personal planning, luxury stays, and smooth end-to-end support so every journey feels effortless.</p>
+    <div class="about-grid">
+      <div class="about-card">
+        <h3>Handpicked Destinations</h3>
+        <p>Every package is chosen for exceptional comfort, safety, and memorable local experiences.</p>
+      </div>
+      <div class="about-card">
+        <h3>Personalized Planning</h3>
+        <p>We tailor each trip around your budget, pace, and interests to build a perfect itinerary.</p>
+      </div>
+      <div class="about-card">
+        <h3>Trusted Support</h3>
+        <p>From booking to return, our team stays available to make your journey worry-free.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding bookings-section" id="booking">
+    <h2 class="section-title">Why Choose Us</h2>
+    <div class="booking-grid">
+      <div class="booking-card">
+        <h3>Easy Reservation</h3>
+        <p>Pick your package, choose your dates, and reserve your preferred stay in minutes.</p>
+      </div>
+      <div class="booking-card">
+        <h3>Flexible Upgrades</h3>
+        <p>Add airport transfers, private guides, and premium room upgrades while booking.</p>
+      </div>
+      <div class="booking-card">
+        <h3>Instant Assistance</h3>
+        <p>Our booking team supports you quickly for changes, confirmations, and requests.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact-section" id="contact">
+    <h2 class="section-title">Contact Us</h2>
+    <div class="contact-wrap">
+      <div class="contact-card">
+        <input class="field" type="text" placeholder="Full Name">
+        <input class="field" type="email" placeholder="Email Address">
+        <input class="field" type="text" placeholder="Subject">
+        <textarea class="field" rows="4" placeholder="Write your message..."></textarea>
+        <button class="btn yellow">Send Message</button>
+      </div>
+      <div class="contact-rate">
+      <h3>Rate Your Experience</h3>
+      <p>How was your journey with TravelSphere?</p>
+      <div class="stars-large" id="mainStarRating">
+        <span data-v="1">★</span><span data-v="2">★</span><span data-v="3">★</span><span data-v="4">★</span><span data-v="5">★</span>
+      </div>
+      <textarea class="feedback-area" rows="3" placeholder="Your thoughts on our curated destinations..."></textarea>
+      <button class="btn yellow" onclick="submitRating()">Submit Review</button>
+      <p id="thankYouMsg" style="margin-top:20px; display:none; color:var(--gold); font-weight:bold;">Thank you for your feedback!</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-nav">
+      <span>Home</span>
+      <span>Destinations</span>
+      <span>Booking</span>
+      <span>About</span>
+      <span>Contact</span>
+    </div>
+    <p class="footer-quote">"Luxury is not a place, it is the way your journey makes you feel."</p>
+    <p style="font-size:0.82rem; color:#d7dced; margin-bottom:8px;">
+      Email: hello@travelsphere.com | Phone: +91 90000 12345 | Hours: Mon-Sat, 9:00 AM - 7:00 PM
+    </p>
+    <div class="socials">
+      <span aria-label="Instagram"><i class="bi bi-instagram"></i></span>
+      <span aria-label="Facebook"><i class="bi bi-facebook"></i></span>
+      <span aria-label="Twitter"><i class="bi bi-twitter-x"></i></span>
+      <span aria-label="YouTube"><i class="bi bi-youtube"></i></span>
+    </div>
+    <p style="font-size:0.8rem; color:rgba(255,255,255,0.55);">© 2026 TravelSphere Luxury Ltd. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const packages = [
+      { n: "Amazing India", p: "Rs. 50,000", t: "4 Days / 3 Nights", i: "images/india.jpg", d: "Explore Jaipur, Delhi & Agra with rich culture and heritage sites." },
+      { n: "European Escape", p: "Rs. 1,20,000", t: "4 Days / 3 Nights", i: "images/europe.jpg", d: "Visit Paris and Rome's iconic landmarks and scenic streets." },
+      { n: "Bali Retreat", p: "Rs. 60,000", t: "4 Days / 3 Nights", i: "images/bali.jpg", d: "Rejuvenate in tropical paradise with spiritual temple tours." },
+      { n: "Dubai Luxury", p: "Rs. 70,000", t: "4 Days / 3 Nights", i: "images/dubai.jpg", d: "Experience the world's tallest buildings and desert safaris." },
+      { n: "Swiss Alps", p: "Rs. 1,50,000", t: "4 Days / 3 Nights", i: "images/swiss.jpg", d: "Snow-capped peaks and luxury stays in the heart of Europe." },
+      { n: "Kyoto Zen", p: "Rs. 1,10,000", t: "4 Days / 3 Nights", i: "images/kyoto.jpg", d: "Traditional tea ceremonies and golden temples in Japan." },
+      { n: "Santorini Blue", p: "Rs. 1,30,000", t: "4 Days / 3 Nights", i: "images/santorini.jpg", d: "Stunning sunsets and whitewashed houses in Greece." },
+      { n: "Cairo Wonders", p: "Rs. 85,000", t: "4 Days / 3 Nights", i: "images/cairo.jpg", d: "Uncover the mysteries of the Pyramids and the Sphinx." },
+      { n: "Maldives Sun", p: "Rs. 1,80,000", t: "4 Days / 3 Nights", i: "images/maldives.jpg", d: "Private overwater bungalows and turquoise lagoons." },
+      { n: "Sydney Coast", p: "Rs. 1,40,000", t: "4 Days / 3 Nights", i: "images/sydney.jpg", d: "Opera House views and surf lessons at Bondi Beach." },
+      { n: "Amalfi Charm", p: "Rs. 1,60,000", t: "4 Days / 3 Nights", i: "images/amalfi.jpg", d: "Scenic drives and lemon groves on Italy's coast." },
+      { n: "New York Hub", p: "Rs. 1,25,000", t: "4 Days / 3 Nights", i: "images/newyork.jpg", d: "The ultimate urban escape in the city that never sleeps." }
+    ];
+
+    const container = document.getElementById('pkgContainer');
+    packages.forEach((pkg, index) => {
+      container.innerHTML += `
+        <div class="package-card">
+          <div class="img-container" style="background-image: url('${pkg.i}')"></div>
+          <div class="content">
+            <h3>${pkg.n}</h3>
+            <p class="duration">${pkg.t}</p>
+            <span class="price">${pkg.p}</span>
+            <div class="pkg-btn-group">
+              <button class="btn-small btn-outline" onclick="toggleDetails(${index})">VIEW DETAILS</button>
+              <button class="btn-small btn-filled" onclick="window.location.href='booking.html'">BOOK NOW</button>
+            </div>
+          </div>
+          <div class="info-box" id="details-${index}">${pkg.d}</div>
+        </div>
+      `;
+    });
+
+    function toggleDetails(index) {
+      const box = document.getElementById(`details-${index}`);
+      const isVisible = box.style.display === 'block';
+      document.querySelectorAll('.info-box').forEach(b => b.style.display = 'none');
+      box.style.display = isVisible ? 'none' : 'block';
+    }
+
+    const rateStars = document.querySelectorAll('#mainStarRating span');
+    rateStars.forEach((s, i) => {
+      s.onclick = () => {
+        rateStars.forEach((st, idx) => st.classList.toggle('active', idx <= i));
+      };
+    });
+
+    function submitRating() {
+      document.getElementById('thankYouMsg').style.display = 'block';
+      setTimeout(() => {
+        document.getElementById('thankYouMsg').style.display = 'none';
+        rateStars.forEach(st => st.classList.remove('active'));
+        document.querySelector('.feedback-area').value = '';
+      }, 3000);
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
