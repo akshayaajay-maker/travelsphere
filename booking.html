@@ -179,7 +179,7 @@
     <section id="package" class="form-pane active">
       <h2 class="title">Package Booking</h2>
 
-      <form class="form-stack" onsubmit="confirmBooking(event)">
+      <form class="form-stack" onsubmit="confirmBooking(event)" novalidate>
         <div>
           <label>Full Name</label>
           <input id="pkgName" type="text" required />
@@ -230,7 +230,7 @@
     <section id="plan" class="form-pane">
       <h2 class="title">Plan a Trip</h2>
 
-      <form class="form-stack" onsubmit="submitPlan(event)">
+      <form class="form-stack" onsubmit="submitPlan(event)" novalidate>
         <div>
           <label>Full Name</label>
           <input id="planName" type="text" required />
@@ -374,6 +374,10 @@
   </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+</html>
+
+
+
 </html>
 
 
